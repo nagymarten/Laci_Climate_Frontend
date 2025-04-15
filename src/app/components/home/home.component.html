@@ -1,0 +1,338 @@
+<div class="flex justify-end items-center gap-4 p-4 border-bottom">
+  <p-button
+    [icon]="isDark() ? 'pi pi-sun' : 'pi pi-moon'"
+    class="p-button-outlined p-button-sm"
+    (onClick)="toggleDark()"
+  ></p-button>
+
+  <p-select
+    inputId="lang-select"
+    [options]="languageOptions"
+    [(ngModel)]="selectedLangValue"
+    optionLabel="label"
+    optionValue="value"
+    class="w-[140px] p-select-sm text-sm"
+    (ngModelChange)="onLangChange($event)"
+  ></p-select>
+</div>
+
+<div class="card flex flex-col items-center overflow-hidden">
+  <div class="flex flex-col items-center gap-2">
+    <span class="text-xl font-medium">{{ "SCROLL_DOWN" | translate }}</span>
+    <span
+      class="animate-bounce h-8 w-8 bg-primary text-primary-contrast rounded-full inline-flex items-center justify-center"
+    >
+      <i class="pi pi-arrow-down"></i>
+    </span>
+  </div>
+
+  <div class="h-[10rem]"></div>
+
+  <h1
+    pAnimateOnScroll
+    enterClass="animate-enter fade-in-10 slide-in-from-t-8 animate-duration-1000"
+    class="text-4xl font-bold text-center mb-12"
+  >
+    {{ "HEADLINE" | translate }}
+  </h1>
+
+  <h2
+    pAnimateOnScroll
+    enterClass="animate-enter fade-in-10 slide-in-from-t-8 animate-duration-1000"
+    class="text-xl font-bold text-center mb-12"
+  >
+    {{ "SUBHEADLINE" | translate }}
+  </h2>
+
+  <p-button
+    pAnimateOnScroll
+    enterClass="animate-enter fade-in-10 slide-in-from-t-8 animate-duration-1000"
+    class="text-3xl font-bold text-center mb-12"
+    icon="pi pi-phone"
+    label="{{ 'CTA.BUTTON.LABEL' | translate }}"
+  ></p-button>
+
+  <div class="h-[30rem]"></div>
+
+  <h2
+    pAnimateOnScroll
+    enterClass="animate-enter fade-in-10 slide-in-from-t-8 animate-duration-1000"
+    class="text-3xl font-bold text-center mb-12"
+  >
+    {{ "SERVICES.TITLE" | translate }}
+  </h2>
+
+  <div class="flex flex-wrap justify-center gap-8">
+    <!-- Service 1 -->
+    <div
+      pAnimateOnScroll
+      enterClass="animate-enter fade-in-10 slide-in-from-l-8 animate-duration-1000"
+      leaveClass="animate-leave fade-out-0"
+      class="flex flex-col border border-surface shadow-lg justify-center items-center max-w-80 rounded-2xl p-8 gap-4"
+    >
+      <div
+        class="rounded-full bg-primary text-primary-contrast w-12 h-12 flex items-center justify-center"
+      >
+        <i class="pi pi-user !text-2xl"></i>
+      </div>
+      <span class="text-2xl font-bold">{{
+        "SERVICES.CLIMATE.TITLE" | translate
+      }}</span>
+      <span class="text-muted-color text-center">
+        {{ "SERVICES.CLIMATE.DESCRIPTION" | translate }}
+      </span>
+    </div>
+
+    <!-- Service 2 -->
+    <div
+      pAnimateOnScroll
+      enterClass="animate-enter fade-in-10 animate-duration-1000"
+      leaveClass="animate-leave fade-out-0"
+      class="flex flex-col border border-surface shadow-lg justify-center items-center max-w-80 rounded-2xl p-8 gap-4"
+    >
+      <div
+        class="rounded-full bg-primary text-primary-contrast w-12 h-12 flex items-center justify-center"
+      >
+        <i class="pi pi-users !text-2xl"></i>
+      </div>
+      <span class="text-2xl font-bold">{{
+        "SERVICES.HEATPUMP.TITLE" | translate
+      }}</span>
+      <span class="text-muted-color text-center">
+        {{ "SERVICES.HEATPUMP.DESCRIPTION" | translate }}
+      </span>
+    </div>
+
+    <!-- Service 3 -->
+    <div
+      pAnimateOnScroll
+      enterClass="animate-enter fade-in-10 slide-in-from-r-8 animate-duration-1000"
+      leaveClass="animate-leave fade-out-0"
+      class="flex flex-col border border-surface shadow-lg justify-center items-center max-w-80 rounded-2xl p-8 gap-4"
+    >
+      <div
+        class="rounded-full bg-primary text-primary-contrast w-12 h-12 flex items-center justify-center"
+      >
+        <i class="pi pi-building !text-2xl"></i>
+      </div>
+      <span class="text-2xl font-bold">{{
+        "SERVICES.MAINTENANCE.TITLE" | translate
+      }}</span>
+      <span class="text-muted-color text-center">
+        {{ "SERVICES.MAINTENANCE.DESCRIPTION" | translate }}
+      </span>
+    </div>
+  </div>
+
+  <div class="h-[30rem]"></div>
+
+  <!-- Client Types -->
+  <h2
+    pAnimateOnScroll
+    enterClass="animate-enter fade-in-10 slide-in-from-t-8 animate-duration-1000"
+    class="text-3xl font-bold text-center mb-12"
+  >
+    {{ "CLIENT_TYPES.TITLE" | translate }}
+  </h2>
+
+  <div class="flex flex-wrap justify-center gap-8">
+    <!-- Private -->
+    <div
+      pAnimateOnScroll
+      enterClass="animate-enter fade-in-10 slide-in-from-t-20 animate-duration-1000"
+      class="flex flex-col border border-primary-200 shadow-lg justify-center items-center max-w-80 rounded-2xl p-8 gap-4"
+    >
+      <div
+        class="rounded-full bg-primary text-primary-contrast w-12 h-12 flex items-center justify-center"
+      >
+        <i class="pi pi-user !text-2xl"></i>
+      </div>
+      <span class="text-2xl font-medium">{{
+        "CLIENT_TYPES.PRIVATE.TITLE" | translate
+      }}</span>
+      <span class="text-muted-color text-center">
+        {{ "CLIENT_TYPES.PRIVATE.DESCRIPTION" | translate }}
+      </span>
+    </div>
+
+    <!-- Communities -->
+    <div
+      pAnimateOnScroll
+      enterClass="animate-enter fade-in-10 slide-in-from-b-20 animate-duration-1000"
+      class="flex flex-col border border-primary-200 shadow-lg justify-center items-center max-w-80 rounded-2xl p-8 gap-4"
+    >
+      <div
+        class="rounded-full bg-primary text-primary-contrast w-12 h-12 flex items-center justify-center"
+      >
+        <i class="pi pi-users !text-2xl"></i>
+      </div>
+      <span class="text-2xl font-medium">{{
+        "CLIENT_TYPES.COMMUNITY.TITLE" | translate
+      }}</span>
+      <span class="text-muted-color text-center">
+        {{ "CLIENT_TYPES.COMMUNITY.DESCRIPTION" | translate }}
+      </span>
+    </div>
+
+    <!-- Businesses -->
+    <div
+      pAnimateOnScroll
+      enterClass="animate-enter fade-in-10 slide-in-from-t-20 animate-duration-1000"
+      class="flex flex-col border border-primary-200 shadow-lg justify-center items-center max-w-80 rounded-2xl p-8 gap-4"
+    >
+      <div
+        class="rounded-full bg-primary text-primary-contrast w-12 h-12 flex items-center justify-center"
+      >
+        <i class="pi pi-building !text-2xl"></i>
+      </div>
+      <span class="text-2xl font-medium">{{
+        "CLIENT_TYPES.BUSINESS.TITLE" | translate
+      }}</span>
+      <span class="text-muted-color text-center">
+        {{ "CLIENT_TYPES.BUSINESS.DESCRIPTION" | translate }}
+      </span>
+    </div>
+  </div>
+
+  <div class="h-[30rem]"></div>
+
+  <!-- Stats -->
+  <h2
+    pAnimateOnScroll
+    enterClass="animate-enter fade-in-10 slide-in-from-t-8 animate-duration-1000"
+    class="text-3xl font-bold text-center mb-12"
+  >
+    {{ "STATS.TITLE" | translate }}
+  </h2>
+
+  <div class="flex flex-wrap justify-center gap-8">
+    <!-- Stat 1 -->
+    <div
+      pAnimateOnScroll
+      enterClass="animate-enter fade-in-10 spin-in-45 slide-in-from-t-12 animate-duration-1000"
+      class="flex flex-col bg-primary text-primary-contrast border-primary shadow-lg justify-center items-center max-w-80 rounded-2xl p-8 gap-4"
+    >
+      <span class="bg-white/20 text-xl font-medium rounded-xl px-4 py-2">
+        {{ "STATS.HAPPY_CLIENTS.VALUE" | translate }}
+      </span>
+      <span class="text-2xl font-bold">{{
+        "STATS.HAPPY_CLIENTS.TITLE" | translate
+      }}</span>
+      <span class="text-center">{{
+        "STATS.HAPPY_CLIENTS.DESCRIPTION" | translate
+      }}</span>
+    </div>
+
+    <!-- Stat 2 -->
+    <div
+      pAnimateOnScroll="{ enterClass: 'animate-enter fade-in-10 zoom-in-50 slide-in-from-t-20 animate-duration-1000' }"
+      class="flex flex-col bg-primary text-primary-contrast border-primary shadow-lg justify-center items-center max-w-80 rounded-2xl p-8 gap-4"
+    >
+      <span class="bg-white/20 text-xl font-medium rounded-xl px-4 py-2">
+        {{ "STATS.INSTALLED_PUMPS.VALUE" | translate }}
+      </span>
+      <span class="text-2xl font-bold">{{
+        "STATS.INSTALLED_PUMPS.TITLE" | translate
+      }}</span>
+      <span class="text-center">{{
+        "STATS.INSTALLED_PUMPS.DESCRIPTION" | translate
+      }}</span>
+    </div>
+
+    <!-- Stat 3 -->
+    <div
+      pAnimateOnScroll
+      enterClass="animate-enter fade-in-10 spin-in-[-45deg] slide-in-from-t-16 animate-duration-1000"
+      class="flex flex-col bg-primary text-primary-contrast border-primary shadow-lg justify-center items-center max-w-80 rounded-2xl p-8 gap-4"
+    >
+      <span class="bg-white/20 text-xl font-medium rounded-xl px-4 py-2">
+        {{ "STATS.EXPERIENCE.VALUE" | translate }}
+      </span>
+      <span class="text-2xl font-bold">{{
+        "STATS.EXPERIENCE.TITLE" | translate
+      }}</span>
+      <span class="text-center">{{
+        "STATS.EXPERIENCE.DESCRIPTION" | translate
+      }}</span>
+    </div>
+  </div>
+
+  <div class="h-[30rem]"></div>
+
+  <!-- Benefits -->
+  <h2
+    pAnimateOnScroll
+    enterClass="animate-enter fade-in-10 slide-in-from-t-8 animate-duration-1000"
+    class="text-3xl font-bold text-center mb-12"
+  >
+    {{ "BENEFITS.TITLE" | translate }}
+  </h2>
+
+  <div class="flex flex-wrap justify-center gap-8">
+    <!-- Eco -->
+    <div
+      pAnimateOnScroll
+      enterClass="animate-enter fade-in-10 zoom-in-50 animate-duration-1000"
+      class="flex flex-col bg-purple-500 text-white border-purple-500 shadow-lg justify-center items-center max-w-80 rounded-2xl p-8 gap-4"
+    >
+      <div
+        class="rounded-full border-2 border-white w-12 h-12 flex items-center justify-center"
+      >
+        <i class="pi pi-heart-fill !text-2xl"></i>
+      </div>
+      <span class="text-2xl font-bold">{{
+        "BENEFITS.ECO.TITLE" | translate
+      }}</span>
+      <span class="text-center">{{
+        "BENEFITS.ECO.DESCRIPTION" | translate
+      }}</span>
+    </div>
+
+    <!-- Economy -->
+    <div
+      pAnimateOnScroll
+      enterClass="animate-enter fade-in-10 zoom-in-75 animate-duration-1000"
+      class="flex flex-col bg-teal-500 text-white border-teal-500 shadow-lg justify-center items-center max-w-80 rounded-2xl p-8 gap-4"
+    >
+      <div
+        class="rounded-full border-2 border-white w-12 h-12 flex items-center justify-center"
+      >
+        <i class="pi pi-dollar !text-2xl"></i>
+      </div>
+      <span class="text-2xl font-bold">{{
+        "BENEFITS.ECONOMY.TITLE" | translate
+      }}</span>
+      <span class="text-center">{{
+        "BENEFITS.ECONOMY.DESCRIPTION" | translate
+      }}</span>
+    </div>
+
+    <!-- Comfort -->
+    <div
+      pAnimateOnScroll
+      enterClass="animate-enter fade-in-10 zoom-in-50 animate-duration-1000"
+      class="flex flex-col bg-indigo-500 text-white border-indigo-500 shadow-lg justify-center items-center max-w-80 rounded-2xl p-8 gap-4"
+    >
+      <div
+        class="rounded-full border-2 border-white w-12 h-12 flex items-center justify-center"
+      >
+        <i class="pi pi-wifi !text-2xl"></i>
+      </div>
+      <span class="text-2xl font-bold">{{
+        "BENEFITS.COMFORT.TITLE" | translate
+      }}</span>
+      <span class="text-center">{{
+        "BENEFITS.COMFORT.DESCRIPTION" | translate
+      }}</span>
+    </div>
+  </div>
+
+  <div class="h-[30rem]"></div>
+
+  <p-scrolltop
+    target="window"
+    [threshold]="100"
+    icon="pi pi-arrow-up"
+    [buttonProps]="{ severity: 'contrast', raised: true, rounded: true }"
+  />
+</div>
