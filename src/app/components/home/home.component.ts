@@ -1,6 +1,7 @@
 import {
   Component,
   ElementRef,
+  inject,
   OnInit,
   signal,
   ViewChild,
@@ -75,7 +76,7 @@ export class HomeComponent implements OnInit {
 
   @ViewChild('contactFormRef') contactForm!: ElementRef;
 
-  constructor(private translate: TranslateService) {}
+  private translate = inject(TranslateService);
 
   ngOnInit(): void {
     if (typeof window !== 'undefined') {
