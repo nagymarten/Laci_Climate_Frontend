@@ -58,25 +58,27 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
 
-Deploy page: 
+Deploy page:
 
 ```bash
 npm install -g angular-cli-ghpages
 ```
 
- (if not yet)
+(if not yet)
 
- ```bash
+```bash
 ng build --output-path=dist  --base-href "https://nagymarten.github.io/Laci_Climate_Frontend/"
 ```
 
- ```bash
-ngh --dir=dist/browser        
+```bash
+ngh --dir=dist/browser
 ```
 
 Együtt
- ```bash
-ng build --output-path=dist  --base-href "https://nagymarten.github.io/Laci_Climate_Frontend/"
-ngh --dir=dist/browser        
+
+```bash
+# ng build --output-path=dist  --base-href "https://nagymarten.github.io/Laci_Climate_Frontend/"
+ng build --configuration production --base-href "/"
+ngh --dir=dist/browser
 
 ```
