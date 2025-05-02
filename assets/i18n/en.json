@@ -1,4 +1,32 @@
 {
+  "NOT_FOUND": {
+    "TITLE": "404 - Page Not Found",
+    "SUBTITLE": "Oops!",
+    "DESCRIPTION": "The page you're looking for doesn't exist.",
+    "GO_HOME": "Go Home"
+  },
+  "ORGANIZATION": {
+    "TITLE": "Climate Installation",
+    "SPLIT": "Wall-mounted split",
+    "PARAPET": "Parapet",
+    "CASSETTE": "Ceiling cassette"
+  },
+  "CONTACT": {
+    "TITLE": "Contact Us",
+    "DESCRIPTION": "For personalized offers, feel free to reach out via email!",
+    "CTA": "For custom offers, feel free to contact us via email or phone!",
+    "FORM": {
+      "NAME": "Name",
+      "EMAIL": "Email",
+      "PHONE": "Phone number",
+      "MESSAGE": "Message",
+      "SUBMIT": "Send",
+      "ENTER_NAME": "Enter your name",
+      "ENTER_EMAIL": "Enter your email address",
+      "ENTER_PHONE": "Enter your phone number",
+      "ENTER_MESSAGE": "Type your message here"
+    }
+  },
   "SCROLL_DOWN": "Scroll down",
   "HEADLINE": "Energy-efficient solutions for your home",
   "SUBHEADLINE": "Air conditioning, central heating, and heat pumps in and around Szeged – full implementation and maintenance.",
