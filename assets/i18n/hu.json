@@ -1,0 +1,101 @@
+{
+  "NOT_FOUND": {
+    "TITLE": "404 - Az oldal nem található",
+    "SUBTITLE": "Hoppá!",
+    "DESCRIPTION": "A keresett oldal nem létezik.",
+    "GO_HOME": "Vissza a főoldalra"
+  },
+  "ORGANIZATION": {
+    "TITLE": "Klímaszerelés",
+    "SPLIT": "Oldalfali split",
+    "PARAPET": "Parapet",
+    "CASSETTE": "Mennyezeti kazettás"
+  },
+  "CONTACT": {
+    "TITLE": "Kapcsolatfelvétel",
+    "DESCRIPTION": "Egyedi ajánlatokért keressen bizalommal e-mailben!",
+    "CTA": "Egyedi ajánlatokért keressen bizalommal e-mailben vagy telefonon!",
+    "FORM": {
+      "NAME": "Név",
+      "EMAIL": "Email",
+      "PHONE": "Telefonszám",
+      "MESSAGE": "Üzenet",
+      "SUBMIT": "Küldés",
+      "ENTER_NAME": "Írja be a nevét",
+      "ENTER_EMAIL": "Írja be az e-mail címét",
+      "ENTER_PHONE": "Írja be a telefonszámát",
+      "ENTER_MESSAGE": "Írja be az üzenetét"
+    }
+  },
+  "SCROLL_DOWN": "Görgess le",
+  "HEADLINE": "  Energiatakarékos megoldások otthonába",
+  "SUBHEADLINE": "Klímatechnika, központi fűtés és hőszivattyúk Szeged és környékén – teljes körű kivitelezés és karbantartás.",
+  "CTA": {
+    "BUTTON": {
+      "LABEL": "Lépjen kapcsolatba velünk"
+    }
+  },
+  "SERVICES": {
+    "TITLE": "Szolgáltatások",
+    "CLIMATE": {
+      "TITLE": "Klímaszerelés",
+      "DESCRIPTION": "Lakossági és ipari split és multi split rendszerek beszerelése, beüzemelése és karbantartása."
+    },
+    "HEATPUMP": {
+      "TITLE": "Hőszivattyúk",
+      "DESCRIPTION": "Zöld energiahasználat: talaj-, víz- vagy levegő-víz hőszivattyúk telepítése fűtésre és hűtésre."
+    },
+    "MAINTENANCE": {
+      "TITLE": "Karbantartás",
+      "DESCRIPTION": "Szakszerű átvizsgálás és tisztítás."
+    }
+  },
+  "CLIENT_TYPES": {
+    "TITLE": "Ügyféltípusok",
+    "PRIVATE": {
+      "TITLE": "Egyéni ügyfelek",
+      "DESCRIPTION": "Megoldásaink tökéletesek otthonába – kényelmes, csendes és megbízható rendszerek"
+    },
+    "COMMUNITY": {
+      "TITLE": "Lakóközösségek",
+      "DESCRIPTION": "Komplex kivitelezés családi házakhoz és társasházakhoz, helyszíni felméréssel."
+    },
+    "BUSINESS": {
+      "TITLE": "Vállalkozások",
+      "DESCRIPTION": "Irodák, üzletek és ipari egységek számára nagy teljesítményű rendszerek, karbantartással."
+    }
+  },
+  "STATS": {
+    "TITLE": "Statisztikák",
+    "HAPPY_CLIENTS": {
+      "VALUE": "500+",
+      "TITLE": "Elégedett ügyfél",
+      "DESCRIPTION": "Több száz család és vállalkozás választott minket Szegeden és környékén – visszatérő ügyfeleink a legnagyobb elismerés számunkra."
+    },
+    "INSTALLED_PUMPS": {
+      "VALUE": "120+",
+      "TITLE": "Beépített hőszivattyú",
+      "DESCRIPTION": "Korszerű, energiahatékony rendszereket telepítünk, melyek évi több ezer kWh energiamegtakarítást eredményeznek."
+    },
+    "EXPERIENCE": {
+      "VALUE": "15 év",
+      "TITLE": "Tapasztalat",
+      "DESCRIPTION": "Stabil szakmai háttérrel és naprakész technológiai tudással biztosítjuk, hogy Ön mindig a legjobb megoldást kapja."
+    }
+  },
+  "BENEFITS": {
+    "TITLE": "Előnyök",
+    "ECO": {
+      "TITLE": "Környezettudatosság",
+      "DESCRIPTION": "Zöld technológiák használata"
+    },
+    "ECONOMY": {
+      "TITLE": "Gazdaságosság",
+      "DESCRIPTION": "Alacsonyabb energiafogyasztás"
+    },
+    "COMFORT": {
+      "TITLE": "Kényelem",
+      "DESCRIPTION": "Automatizált rendszerek, okosvezérlés"
+    }
+  }
+}
