@@ -16,11 +16,12 @@ import { AnimateOnScrollModule } from 'primeng/animateonscroll';
 import { AvatarModule } from 'primeng/avatar';
 import { ScrollTopModule } from 'primeng/scrolltop';
 import { OrganizationChartModule } from 'primeng/organizationchart';
-import { TreeNode } from 'primeng/api';
+import { MessageService, TreeNode } from 'primeng/api';
 import { MatIconModule } from '@angular/material/icon';
 import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
 import emailjs from '@emailjs/browser';
+import { Toast } from 'primeng/toast';
 
 @Component({
   selector: 'app-home',
@@ -38,12 +39,15 @@ import emailjs from '@emailjs/browser';
     FormsModule,
     InputTextModule,
     TextareaModule,
+    Toast,
   ],
+  providers: [MessageService],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
 export class HomeComponent implements OnInit {
   private translate = inject(TranslateService);
+  private messageService = inject(MessageService);
 
   @ViewChild('contactFormRef') contactForm!: ElementRef;
 
@@ -172,7 +176,7 @@ export class HomeComponent implements OnInit {
         localizedReplies[this.selectedLangValue as 'hu' | 'en'],
     };
 
-    // 1. Send to you (admin)
+    // 1. Send to admin
     emailjs
       .send(
         'service_iv5svdv',
@@ -181,7 +185,7 @@ export class HomeComponent implements OnInit {
         'UiZnfR01s1uECBEHS'
       )
       .then(() => {
-        // 2. Send auto-reply to user
+        // 2. Auto-reply to user
         emailjs
           .send(
             'service_iv5svdv',
@@ -190,22 +194,33 @@ export class HomeComponent implements OnInit {
             'UiZnfR01s1uECBEHS'
           )
           .then(() => {
-            alert(
-              this.selectedLangValue === 'hu'
-                ? 'Üzenet elküldve! Válaszüzenetet is küldtünk.'
-                : 'Message sent! Auto-reply was sent to the user.'
-            );
+            this.messageService.add({
+              severity: 'success',
+              summary:
+                this.selectedLangValue === 'hu'
+                  ? 'Sikeres küldés'
+                  : 'Message Sent',
+              detail:
+                this.selectedLangValue === 'hu'
+                  ? 'Üzenet elküldve! Válaszüzenetet is küldtünk.'
+                  : 'Message sent! Auto-reply was sent to the user.',
+              life: 4000,
+            });
           })
           .catch((err) => {
             console.warn('Auto-reply failed:', err);
           });
       })
       .catch((error) => {
-        alert(
-          (this.selectedLangValue === 'hu'
-            ? 'Hiba történt: '
-            : 'Failed to send email: ') + JSON.stringify(error)
-        );
+        this.messageService.add({
+          severity: 'error',
+          summary: this.selectedLangValue === 'hu' ? 'Hiba' : 'Error',
+          detail:
+            (this.selectedLangValue === 'hu'
+              ? 'Hiba történt az üzenet küldésekor: '
+              : 'Failed to send email: ') + JSON.stringify(error),
+          life: 5000,
+        });
       });
   }
 
@@ -214,7 +229,7 @@ export class HomeComponent implements OnInit {
   }
 
   scrollToForm() {
-    const offset = 100; // Adjust if you have a sticky header
+    const offset = 100;
 
     const top =
       this.contactForm.nativeElement.getBoundingClientRect().top +
