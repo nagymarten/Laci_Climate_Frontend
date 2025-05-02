@@ -59,26 +59,21 @@ export class HomeComponent implements OnInit {
   message = '';
   email = '';
   phone = '';
-  languageOptions = [
-    { label: 'English', value: 'en', icon: 'flag-icon flag-icon-gb' },
-    { label: 'Magyar', value: 'hu', icon: 'flag-icon flag-icon-hu' },
+  languages = [
+    { name: 'English', code: 'en' },
+    { name: 'Magyar', code: 'hu' },
   ];
 
-  selectedLangValue = 'hu';
+  selectedLanguage: any;
   data: TreeNode[] = [];
 
   ngOnInit(): void {
+    this.initLanguage();
+
     const container = document.querySelector('.scrollable');
     if (container) {
       container.scrollTop = 0;
     }
-    const storedLang = localStorage.getItem('selectedLang');
-    if (storedLang && ['hu', 'en'].includes(storedLang)) {
-      this.selectedLangValue = storedLang;
-    }
-
-    this.translate.setDefaultLang(this.selectedLangValue);
-    this.translate.use(this.selectedLangValue);
 
     if (typeof window !== 'undefined') {
       const darkMode = localStorage.getItem('isDarkMode');
@@ -103,6 +98,15 @@ export class HomeComponent implements OnInit {
     }
 
     this.isVisible = this.scrollOpacity > 0;
+  }
+
+  private initLanguage(): void {
+    const savedLang = localStorage.getItem('language') || 'hu';
+    this.selectedLanguage = this.languages.find(
+      (lang) => lang.code === savedLang
+    );
+    this.translate.setDefaultLang(savedLang);
+    this.translate.use(savedLang);
   }
 
   private updateOrganizationChart(): void {
@@ -148,11 +152,16 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  onLangChange(lang: string) {
-    this.selectedLangValue = lang;
-    localStorage.setItem('selectedLang', lang);
-    this.translate.use(lang);
-    this.updateOrganizationChart();
+  onLanguageChange(event: any, selectRef: any) {
+    const langCode = event.value.code;
+    this.translate.use(langCode);
+    localStorage.setItem('language', langCode);
+
+    if (selectRef?.el?.nativeElement) {
+      selectRef.el.nativeElement.blur();
+
+      selectRef.el.nativeElement.classList.remove('p-focus');
+    }
   }
 
   sendMessage() {
@@ -166,14 +175,15 @@ export class HomeComponent implements OnInit {
       en: `Hi ${this.name},\n\nThank you for reaching out! We have received your request: "${localizedTitles['en']}" and will process it within 3 business days.\n\nBest regards,\nMitrik László`,
     };
 
+    const lang = this.selectedLanguage.code as 'hu' | 'en';
+
     const templateParams = {
       name: this.name,
       email: this.email,
       phone: this.phone,
       message: this.message,
-      title: localizedTitles[this.selectedLangValue as 'hu' | 'en'],
-      auto_reply_message:
-        localizedReplies[this.selectedLangValue as 'hu' | 'en'],
+      title: localizedTitles[lang],
+      auto_reply_message: localizedReplies[lang],
     };
 
     // 1. Send to admin
@@ -196,14 +206,11 @@ export class HomeComponent implements OnInit {
           .then(() => {
             this.messageService.add({
               severity: 'success',
-              summary:
-                this.selectedLangValue === 'hu'
-                  ? 'Sikeres küldés'
-                  : 'Message Sent',
+              summary: lang === 'hu' ? 'Sikeres küldés' : 'Message Sent',
               detail:
-                this.selectedLangValue === 'hu'
-                  ? 'Üzenet elküldve! Válaszüzenetet is küldtünk.'
-                  : 'Message sent! Auto-reply was sent to the user.',
+                lang === 'hu'
+                  ? 'Üzenet elküldve!'
+                  : 'Message sent!.',
               life: 4000,
             });
           })
@@ -214,9 +221,9 @@ export class HomeComponent implements OnInit {
       .catch((error) => {
         this.messageService.add({
           severity: 'error',
-          summary: this.selectedLangValue === 'hu' ? 'Hiba' : 'Error',
+          summary: lang === 'hu' ? 'Hiba' : 'Error',
           detail:
-            (this.selectedLangValue === 'hu'
+            (lang === 'hu'
               ? 'Hiba történt az üzenet küldésekor: '
               : 'Failed to send email: ') + JSON.stringify(error),
           life: 5000,
@@ -226,6 +233,13 @@ export class HomeComponent implements OnInit {
 
   callPhone() {
     window.location.href = 'tel:+36201234567';
+  }
+
+  getFlagUrl(code: string): string {
+    if (code === 'en') return 'https://flagcdn.com/gb.svg'; // UK flag for English
+    if (code === 'hu') return 'https://flagcdn.com/hu.svg'; // Hungary
+    if (code === 'de') return 'https://flagcdn.com/de.svg'; // Germany
+    return 'https://flagcdn.com/unknown.svg'; // fallback
   }
 
   scrollToForm() {

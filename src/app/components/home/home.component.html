@@ -8,14 +8,35 @@
   ></p-button>
 
   <p-select
-    inputId="lang-select"
-    [options]="languageOptions"
-    [(ngModel)]="selectedLangValue"
-    optionLabel="label"
-    optionValue="value"
-    class="w-[140px] p-select-sm text-sm"
-    (ngModelChange)="onLangChange($event)"
-  ></p-select>
+    #languageSelectRef
+    [options]="languages"
+    [(ngModel)]="selectedLanguage"
+    optionLabel="name"
+    [filter]="false"
+    [showClear]="false"
+    placeholder="Select Language"
+    class="w-full md:w-40"
+    (onChange)="onLanguageChange($event, languageSelectRef)"
+  >
+    <ng-template #selectedItem let-selectedOption>
+      <div class="flex items-center gap-2">
+        <img
+          [src]="getFlagUrl(selectedOption.code)"
+          style="width: 18px; height: 12px; object-fit: cover"
+        />
+        <div>{{ selectedOption.name }}</div>
+      </div>
+    </ng-template>
+    <ng-template let-lang #item>
+      <div class="flex items-center gap-2">
+        <img
+          [src]="getFlagUrl(lang.code)"
+          style="width: 18px; height: 12px; object-fit: cover"
+        />
+        <div>{{ lang.name }}</div>
+      </div>
+    </ng-template>
+  </p-select>
 </div>
 
 <div class="card flex flex-col items-center overflow-hidden">
