@@ -1,4 +1,4 @@
-<div class="flex justify-end items-center gap-4 p-4 border-bottom">
+<div class="scrollable flex justify-end items-center gap-4 p-4 border-bottom">
   <p-button
     [icon]="isDark() ? 'pi pi-sun' : 'pi pi-moon'"
     class="p-button-outlined p-button-sm"
@@ -19,8 +19,8 @@
 <div class="card flex flex-col items-center overflow-hidden">
   <h1
     pAnimateOnScroll
+    class="text-4xl font-bold text-center mb-12 opacity-100"
     enterClass="animate-enter fade-in-10 zoom-in-50 animate-duration-1000"
-    class="text-4xl font-bold text-center mb-12"
   >
     {{ "HEADLINE" | translate }}
   </h1>
@@ -28,6 +28,7 @@
   <h2
     pAnimateOnScroll
     enterClass="animate-enter fade-in-10 zoom-in-50 animate-duration-1000"
+    leaveClass="animate-leave fade-out zoom-in-50 animate-duration-1000"
     class="text-xl font-bold text-center mb-12"
   >
     {{ "SUBHEADLINE" | translate }}
@@ -58,10 +59,21 @@
 
   <div class="h-[15rem]"></div>
 
-  <div class="flex flex-col items-center gap-2">
-    <span class="text-xl font-medium">{{ "SCROLL_DOWN" | translate }}</span>
+  <div
+    *ngIf="scrollOpacity > 0"
+    class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 flex flex-col items-center gap-2"
+    [ngClass]="{
+      'opacity-100': scrollOpacity === 1,
+      'opacity-50': scrollOpacity < 1 && scrollOpacity > 0
+    }"
+    [style.opacity]="scrollOpacity"
+    style="transition: opacity 1.2s ease-in-out"
+  >
+    <span class="text-xl font-medium drop-shadow">
+      {{ "SCROLL_DOWN" | translate }}
+    </span>
     <span
-      class="animate-bounce h-8 w-8 bg-primary text-primary-contrast rounded-full inline-flex items-center justify-center"
+      class="animate-bounce h-8 w-8 bg-primary text-primary-contrast rounded-full inline-flex items-center justify-center shadow-lg"
     >
       <i class="pi pi-arrow-down"></i>
     </span>
@@ -88,13 +100,9 @@
       <div
         class="rounded-full bg-primary text-primary-contrast w-12 h-12 flex items-center justify-center"
       >
-        <mat-icon
-          aria-hidden="false"
-          fontIcon="ac_unit"
-          class="!text-2xl"
-        ></mat-icon>
+        <mat-icon aria-hidden="false" fontIcon="ac_unit"></mat-icon>
       </div>
-      <p-organization-chart class="w-full" [value]="data" [collapsible]="true">
+      <p-organization-chart class="" [value]="data" [collapsible]="true">
         <ng-template let-node pTemplate="default">
           <div class="font-medium text-base break-words">
             {{ node.label }}

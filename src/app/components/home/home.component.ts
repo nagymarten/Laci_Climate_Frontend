@@ -1,6 +1,7 @@
 import {
   Component,
   ElementRef,
+  HostListener,
   inject,
   OnInit,
   signal,
@@ -47,6 +48,9 @@ export class HomeComponent implements OnInit {
   @ViewChild('contactFormRef') contactForm!: ElementRef;
 
   isDark = signal(false);
+  scrollOpacity = 1;
+  isVisible = true;
+
   name = '';
   message = '';
   email = '';
@@ -60,6 +64,10 @@ export class HomeComponent implements OnInit {
   data: TreeNode[] = [];
 
   ngOnInit(): void {
+    const container = document.querySelector('.scrollable');
+    if (container) {
+      container.scrollTop = 0;
+    }
     const storedLang = localStorage.getItem('selectedLang');
     if (storedLang && ['hu', 'en'].includes(storedLang)) {
       this.selectedLangValue = storedLang;
@@ -77,6 +85,20 @@ export class HomeComponent implements OnInit {
     }
 
     this.updateOrganizationChart();
+  }
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    const scrollY = window.scrollY || window.pageYOffset;
+
+    if (scrollY < 50) {
+      this.scrollOpacity = 1;
+    } else if (scrollY >= 50 && scrollY < 150) {
+      this.scrollOpacity = 1 - (scrollY - 50) / 100;
+    } else {
+      this.scrollOpacity = 0;
+    }
+
+    this.isVisible = this.scrollOpacity > 0;
   }
 
   private updateOrganizationChart(): void {
