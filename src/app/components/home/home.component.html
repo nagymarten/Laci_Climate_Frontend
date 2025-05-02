@@ -17,6 +17,47 @@
 </div>
 
 <div class="card flex flex-col items-center overflow-hidden">
+  <h1
+    pAnimateOnScroll
+    enterClass="animate-enter fade-in-10 zoom-in-50 animate-duration-1000"
+    class="text-4xl font-bold text-center mb-12"
+  >
+    {{ "HEADLINE" | translate }}
+  </h1>
+
+  <h2
+    pAnimateOnScroll
+    enterClass="animate-enter fade-in-10 zoom-in-50 animate-duration-1000"
+    class="text-xl font-bold text-center mb-12"
+  >
+    {{ "SUBHEADLINE" | translate }}
+  </h2>
+
+  <p-button
+    pAnimateOnScroll
+    enterClass="animate-enter fade-in-10 zoom-in-50 animate-duration-1000"
+    leaveClass="animate-leave fade-out zoom-in-50 animate-duration-1000"
+    class="text-3xl font-bold text-center mb-12"
+    icon="pi pi-envelope "
+    label="E-mail"
+    (click)="scrollToForm()"
+  ></p-button>
+
+  <p-button
+    pAnimateOnScroll
+    enterClass="animate-enter fade-in-10 zoom-in-50 animate-duration-1000"
+    leaveClass="animate-leave fade-out zoom-in-50 animate-duration-1000"
+    class="text-3xl font-bold text-center mb-12"
+    icon="pi pi-phone"
+    label="+36 20 226 09 59"
+    (click)="callPhone()"
+  ></p-button>
+  <p class="text-center text-muted-color text-sm mb-4">
+    Egyedi ajánlatokért keressen bizalommal e-mailben vagy telefonon!
+  </p>
+
+  <div class="h-[15rem]"></div>
+
   <div class="flex flex-col items-center gap-2">
     <span class="text-xl font-medium">{{ "SCROLL_DOWN" | translate }}</span>
     <span
@@ -26,88 +67,46 @@
     </span>
   </div>
 
-  <div class="h-[10rem]"></div>
-
-  <h1
-    pAnimateOnScroll
-    enterClass="animate-enter fade-in-10 slide-in-from-t-8 animate-duration-1000"
-    class="text-4xl font-bold text-center mb-12"
-  >
-    {{ "HEADLINE" | translate }}
-  </h1>
-
-  <h2
-    pAnimateOnScroll
-    enterClass="animate-enter fade-in-10 slide-in-from-t-8 animate-duration-1000"
-    class="text-xl font-bold text-center mb-12"
-  >
-    {{ "SUBHEADLINE" | translate }}
-  </h2>
-
-  <p-button
-    pAnimateOnScroll
-    enterClass="animate-enter fade-in-10 slide-in-from-t-8 animate-duration-1000"
-    class="text-3xl font-bold text-center mb-12"
-    icon="pi pi-phone"
-    label="{{ 'CTA.BUTTON.LABEL' | translate }}"
-  ></p-button>
-
   <div class="h-[30rem]"></div>
 
   <h2
     pAnimateOnScroll
     enterClass="animate-enter fade-in-10 slide-in-from-t-8 animate-duration-1000"
+    leaveClass="animate-leave fade-out zoom-in-50 animate-duration-1000"
     class="text-3xl font-bold text-center mb-12"
   >
     {{ "SERVICES.TITLE" | translate }}
   </h2>
 
   <div class="flex flex-wrap justify-center gap-8">
-    <!-- Service 1 -->
     <div
       pAnimateOnScroll
-      enterClass="animate-enter fade-in-10 slide-in-from-l-8 animate-duration-1000"
-      leaveClass="animate-leave fade-out-0"
-      class="flex flex-col border border-surface shadow-lg justify-center items-center max-w-80 rounded-2xl p-8 gap-4"
+      enterClass="animate-enter fade-in-10 zoom-in-50 animate-duration-1000"
+      leaveClass="animate-leave fade-out zoom-in-50 animate-duration-1000"
+      class="flex flex-col border border-surface shadow-lg items-center w-fit rounded-2xl p-8 gap-4"
     >
       <div
         class="rounded-full bg-primary text-primary-contrast w-12 h-12 flex items-center justify-center"
       >
-        <i class="pi pi-user !text-2xl"></i>
+        <mat-icon
+          aria-hidden="false"
+          fontIcon="ac_unit"
+          class="!text-2xl"
+        ></mat-icon>
       </div>
-      <span class="text-2xl font-bold">{{
-        "SERVICES.CLIMATE.TITLE" | translate
-      }}</span>
-      <span class="text-muted-color text-center">
-        {{ "SERVICES.CLIMATE.DESCRIPTION" | translate }}
-      </span>
+      <p-organization-chart class="w-full" [value]="data" [collapsible]="true">
+        <ng-template let-node pTemplate="default">
+          <div class="font-medium text-base break-words">
+            {{ node.label }}
+          </div>
+        </ng-template>
+      </p-organization-chart>
     </div>
 
-    <!-- Service 2 -->
     <div
       pAnimateOnScroll
-      enterClass="animate-enter fade-in-10 animate-duration-1000"
-      leaveClass="animate-leave fade-out-0"
-      class="flex flex-col border border-surface shadow-lg justify-center items-center max-w-80 rounded-2xl p-8 gap-4"
-    >
-      <div
-        class="rounded-full bg-primary text-primary-contrast w-12 h-12 flex items-center justify-center"
-      >
-        <i class="pi pi-users !text-2xl"></i>
-      </div>
-      <span class="text-2xl font-bold">{{
-        "SERVICES.HEATPUMP.TITLE" | translate
-      }}</span>
-      <span class="text-muted-color text-center">
-        {{ "SERVICES.HEATPUMP.DESCRIPTION" | translate }}
-      </span>
-    </div>
-
-    <!-- Service 3 -->
-    <div
-      pAnimateOnScroll
-      enterClass="animate-enter fade-in-10 slide-in-from-r-8 animate-duration-1000"
-      leaveClass="animate-leave fade-out-0"
+      enterClass="animate-enter fade-in-10 zoom-in-50 animate-duration-1000"
+      leaveClass="animate-leave fade-out zoom-in-50 animate-duration-1000"
       class="flex flex-col border border-surface shadow-lg justify-center items-center max-w-80 rounded-2xl p-8 gap-4"
     >
       <div
@@ -126,10 +125,10 @@
 
   <div class="h-[30rem]"></div>
 
-  <!-- Client Types -->
   <h2
     pAnimateOnScroll
-    enterClass="animate-enter fade-in-10 slide-in-from-t-8 animate-duration-1000"
+    enterClass="animate-enter fade-in-10 zoom-in-50 animate-duration-1000"
+    leaveClass="animate-leave fade-out zoom-in-50 animate-duration-1000"
     class="text-3xl font-bold text-center mb-12"
   >
     {{ "CLIENT_TYPES.TITLE" | translate }}
@@ -139,7 +138,8 @@
     <!-- Private -->
     <div
       pAnimateOnScroll
-      enterClass="animate-enter fade-in-10 slide-in-from-t-20 animate-duration-1000"
+      enterClass="animate-enter fade-in-10 zoom-in-50 animate-duration-1000"
+      leaveClass="animate-leave fade-out zoom-in-50 animate-duration-1000"
       class="flex flex-col border border-primary-200 shadow-lg justify-center items-center max-w-80 rounded-2xl p-8 gap-4"
     >
       <div
@@ -158,7 +158,8 @@
     <!-- Communities -->
     <div
       pAnimateOnScroll
-      enterClass="animate-enter fade-in-10 slide-in-from-b-20 animate-duration-1000"
+      enterClass="animate-enter fade-in-10 zoom-in-50 animate-duration-1000"
+      leaveClass="animate-leave fade-out zoom-in-50 animate-duration-1000"
       class="flex flex-col border border-primary-200 shadow-lg justify-center items-center max-w-80 rounded-2xl p-8 gap-4"
     >
       <div
@@ -177,7 +178,8 @@
     <!-- Businesses -->
     <div
       pAnimateOnScroll
-      enterClass="animate-enter fade-in-10 slide-in-from-t-20 animate-duration-1000"
+      enterClass="animate-enter fade-in-10 zoom-in-50 animate-duration-1000"
+      leaveClass="animate-leave fade-out zoom-in-50 animate-duration-1000"
       class="flex flex-col border border-primary-200 shadow-lg justify-center items-center max-w-80 rounded-2xl p-8 gap-4"
     >
       <div
@@ -196,73 +198,11 @@
 
   <div class="h-[30rem]"></div>
 
-  <!-- Stats -->
-  <h2
-    pAnimateOnScroll
-    enterClass="animate-enter fade-in-10 slide-in-from-t-8 animate-duration-1000"
-    class="text-3xl font-bold text-center mb-12"
-  >
-    {{ "STATS.TITLE" | translate }}
-  </h2>
-
-  <div class="flex flex-wrap justify-center gap-8">
-    <!-- Stat 1 -->
-    <div
-      pAnimateOnScroll
-      enterClass="animate-enter fade-in-10 spin-in-45 slide-in-from-t-12 animate-duration-1000"
-      class="flex flex-col bg-primary text-primary-contrast border-primary shadow-lg justify-center items-center max-w-80 rounded-2xl p-8 gap-4"
-    >
-      <span class="bg-white/20 text-xl font-medium rounded-xl px-4 py-2">
-        {{ "STATS.HAPPY_CLIENTS.VALUE" | translate }}
-      </span>
-      <span class="text-2xl font-bold">{{
-        "STATS.HAPPY_CLIENTS.TITLE" | translate
-      }}</span>
-      <span class="text-center">{{
-        "STATS.HAPPY_CLIENTS.DESCRIPTION" | translate
-      }}</span>
-    </div>
-
-    <!-- Stat 2 -->
-    <div
-      pAnimateOnScroll="{ enterClass: 'animate-enter fade-in-10 zoom-in-50 slide-in-from-t-20 animate-duration-1000' }"
-      class="flex flex-col bg-primary text-primary-contrast border-primary shadow-lg justify-center items-center max-w-80 rounded-2xl p-8 gap-4"
-    >
-      <span class="bg-white/20 text-xl font-medium rounded-xl px-4 py-2">
-        {{ "STATS.INSTALLED_PUMPS.VALUE" | translate }}
-      </span>
-      <span class="text-2xl font-bold">{{
-        "STATS.INSTALLED_PUMPS.TITLE" | translate
-      }}</span>
-      <span class="text-center">{{
-        "STATS.INSTALLED_PUMPS.DESCRIPTION" | translate
-      }}</span>
-    </div>
-
-    <!-- Stat 3 -->
-    <div
-      pAnimateOnScroll
-      enterClass="animate-enter fade-in-10 spin-in-[-45deg] slide-in-from-t-16 animate-duration-1000"
-      class="flex flex-col bg-primary text-primary-contrast border-primary shadow-lg justify-center items-center max-w-80 rounded-2xl p-8 gap-4"
-    >
-      <span class="bg-white/20 text-xl font-medium rounded-xl px-4 py-2">
-        {{ "STATS.EXPERIENCE.VALUE" | translate }}
-      </span>
-      <span class="text-2xl font-bold">{{
-        "STATS.EXPERIENCE.TITLE" | translate
-      }}</span>
-      <span class="text-center">{{
-        "STATS.EXPERIENCE.DESCRIPTION" | translate
-      }}</span>
-    </div>
-  </div>
-
-  <div class="h-[30rem]"></div>
-
   <!-- Benefits -->
   <h2
     pAnimateOnScroll
     enterClass="animate-enter fade-in-10 slide-in-from-t-8 animate-duration-1000"
+    leaveClass="animate-leave fade-out zoom-in-50 animate-duration-1000"
     class="text-3xl font-bold text-center mb-12"
   >
     {{ "BENEFITS.TITLE" | translate }}
@@ -273,12 +213,13 @@
     <div
       pAnimateOnScroll
       enterClass="animate-enter fade-in-10 zoom-in-50 animate-duration-1000"
+      leaveClass="animate-leave fade-out zoom-in-50 animate-duration-1000"
       class="flex flex-col bg-purple-500 text-white border-purple-500 shadow-lg justify-center items-center max-w-80 rounded-2xl p-8 gap-4"
     >
       <div
         class="rounded-full border-2 border-white w-12 h-12 flex items-center justify-center"
       >
-        <i class="pi pi-heart-fill !text-2xl"></i>
+        <i class="pi pi-globe !text-2xl"></i>
       </div>
       <span class="text-2xl font-bold">{{
         "BENEFITS.ECO.TITLE" | translate
@@ -292,6 +233,7 @@
     <div
       pAnimateOnScroll
       enterClass="animate-enter fade-in-10 zoom-in-75 animate-duration-1000"
+      leaveClass="animate-leave fade-out zoom-in-50 animate-duration-1000"
       class="flex flex-col bg-teal-500 text-white border-teal-500 shadow-lg justify-center items-center max-w-80 rounded-2xl p-8 gap-4"
     >
       <div
@@ -311,6 +253,7 @@
     <div
       pAnimateOnScroll
       enterClass="animate-enter fade-in-10 zoom-in-50 animate-duration-1000"
+      leaveClass="animate-leave fade-out zoom-in-50 animate-duration-1000"
       class="flex flex-col bg-indigo-500 text-white border-indigo-500 shadow-lg justify-center items-center max-w-80 rounded-2xl p-8 gap-4"
     >
       <div
@@ -328,6 +271,92 @@
   </div>
 
   <div class="h-[30rem]"></div>
+
+  <div
+    #contactFormRef
+    pAnimateOnScroll
+    enterClass="animate-enter fade-in-10 zoom-in-50 animate-duration-1000"
+    leaveClass="animate-leave fade-out zoom-in-50 animate-duration-1000"
+    class="flex flex-col border border-surface shadow-lg items-center w-full max-w-4xl px-4 sm:px-6 lg:px-8 mx-auto rounded-2xl p-8 gap-4"
+  >
+    <h2 class="text-2xl font-semibold text-center">Kapcsolatfelvétel</h2>
+
+    <p class="text-center text-muted-color text-sm mb-4">
+      Egyedi ajánlatokért keressen bizalommal e-mailben!
+    </p>
+
+    <form (ngSubmit)="sendMessage()" #form="ngForm" class="w-full space-y-5">
+      <!-- Name -->
+      <div class="flex flex-col gap-1">
+        <label for="name" class="text-sm font-medium">Név</label>
+        <input
+          id="name"
+          type="text"
+          pInputText
+          name="name"
+          [(ngModel)]="name"
+          class="w-full"
+          required
+        />
+      </div>
+
+      <!-- Email -->
+      <div class="flex flex-col gap-1">
+        <label for="email" class="text-sm font-medium">Email</label>
+        <input
+          id="email"
+          type="email"
+          pInputText
+          name="email"
+          [(ngModel)]="email"
+          class="w-full"
+          required
+        />
+      </div>
+
+      <!-- Phone -->
+      <div class="flex flex-col gap-1">
+        <label for="phone" class="text-sm font-medium">Telefonszám</label>
+        <input
+          id="phone"
+          type="tel"
+          pInputText
+          name="phone"
+          [(ngModel)]="phone"
+          class="w-full"
+        />
+      </div>
+
+      <!-- Message -->
+      <div class="flex flex-col gap-1">
+        <label for="message" class="text-sm font-medium">Üzenet</label>
+        <textarea
+          id="message"
+          pTextarea
+          name="message"
+          [(ngModel)]="message"
+          rows="5"
+          class="w-full"
+          required
+        ></textarea>
+      </div>
+
+      <!-- Submit -->
+      <button
+        pButton
+        type="submit"
+        label="Küldés"
+        [disabled]="form.invalid"
+        class="w-full mt-6"
+      ></button>
+
+    </form>
+    <p class="text-center text-muted-color text-sm mt-8">
+      <strong>Mitrik László e.v. </strong>
+    </p>
+  </div>
+
+  <div class="h-[5rem]"></div>
 
   <p-scrolltop
     target="window"
