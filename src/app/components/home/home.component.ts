@@ -42,6 +42,10 @@ import emailjs from '@emailjs/browser';
   styleUrl: './home.component.css',
 })
 export class HomeComponent implements OnInit {
+  private translate = inject(TranslateService);
+
+  @ViewChild('contactFormRef') contactForm!: ElementRef;
+
   isDark = signal(false);
   name = '';
   message = '';
@@ -52,39 +56,19 @@ export class HomeComponent implements OnInit {
     { label: 'Magyar', value: 'hu', icon: 'flag-icon flag-icon-hu' },
   ];
 
-  data: TreeNode[] = [
-    {
-      label: 'Klímaszerelés',
-      expanded: true,
-      children: [
-        {
-          label: 'Oldalfali split',
-          expanded: true,
-        },
-        {
-          label: 'Parapet ',
-          expanded: true,
-        },
-        {
-          label: 'Mennyezeti kazettás',
-          expanded: true,
-        },
-      ],
-    },
-  ];
   selectedLangValue = 'hu';
-
-  @ViewChild('contactFormRef') contactForm!: ElementRef;
-
-  private translate = inject(TranslateService);
+  data: TreeNode[] = [];
 
   ngOnInit(): void {
-    if (typeof window !== 'undefined') {
-      const storedLang = localStorage.getItem('selectedLang');
-      if (storedLang && ['hu', 'en'].includes(storedLang)) {
-        this.selectedLangValue = storedLang;
-      }
+    const storedLang = localStorage.getItem('selectedLang');
+    if (storedLang && ['hu', 'en'].includes(storedLang)) {
+      this.selectedLangValue = storedLang;
+    }
 
+    this.translate.setDefaultLang(this.selectedLangValue);
+    this.translate.use(this.selectedLangValue);
+
+    if (typeof window !== 'undefined') {
       const darkMode = localStorage.getItem('isDarkMode');
       if (darkMode === 'true') {
         this.isDark.set(true);
@@ -92,8 +76,39 @@ export class HomeComponent implements OnInit {
       }
     }
 
-    this.translate.setDefaultLang(this.selectedLangValue);
-    this.translate.use(this.selectedLangValue);
+    this.updateOrganizationChart();
+  }
+
+  private updateOrganizationChart(): void {
+    this.translate
+      .get([
+        'ORGANIZATION.TITLE',
+        'ORGANIZATION.SPLIT',
+        'ORGANIZATION.PARAPET',
+        'ORGANIZATION.CASSETTE',
+      ])
+      .subscribe((translations) => {
+        this.data = [
+          {
+            label: translations['ORGANIZATION.TITLE'],
+            expanded: true,
+            children: [
+              {
+                label: translations['ORGANIZATION.SPLIT'],
+                expanded: true,
+              },
+              {
+                label: translations['ORGANIZATION.PARAPET'],
+                expanded: true,
+              },
+              {
+                label: translations['ORGANIZATION.CASSETTE'],
+                expanded: true,
+              },
+            ],
+          },
+        ];
+      });
   }
 
   toggleDark() {
@@ -111,6 +126,7 @@ export class HomeComponent implements OnInit {
     this.selectedLangValue = lang;
     localStorage.setItem('selectedLang', lang);
     this.translate.use(lang);
+    this.updateOrganizationChart();
   }
 
   sendMessage() {

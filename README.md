@@ -73,3 +73,10 @@ ng build --output-path=dist  --base-href "https://nagymarten.github.io/Laci_Clim
  ```bash
 ngh --dir=dist/browser        
 ```
+
+Együtt
+ ```bash
+ng build --output-path=dist  --base-href "https://nagymarten.github.io/Laci_Climate_Frontend/"
+ngh --dir=dist/browser        
+
+```

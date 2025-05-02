@@ -53,7 +53,7 @@
     (click)="callPhone()"
   ></p-button>
   <p class="text-center text-muted-color text-sm mb-4">
-    Egyedi ajánlatokért keressen bizalommal e-mailben vagy telefonon!
+    {{ "CONTACT.CTA" | translate }}
   </p>
 
   <div class="h-[15rem]"></div>
@@ -279,16 +279,20 @@
     leaveClass="animate-leave fade-out zoom-in-50 animate-duration-1000"
     class="flex flex-col border border-surface shadow-lg items-center w-full max-w-4xl px-4 sm:px-6 lg:px-8 mx-auto rounded-2xl p-8 gap-4"
   >
-    <h2 class="text-2xl font-semibold text-center">Kapcsolatfelvétel</h2>
+    <h2 class="text-2xl font-semibold text-center">
+      {{ "CONTACT.TITLE" | translate }}
+    </h2>
 
     <p class="text-center text-muted-color text-sm mb-4">
-      Egyedi ajánlatokért keressen bizalommal e-mailben!
+      {{ "CONTACT.DESCRIPTION" | translate }}
     </p>
 
     <form (ngSubmit)="sendMessage()" #form="ngForm" class="w-full space-y-5">
       <!-- Name -->
       <div class="flex flex-col gap-1">
-        <label for="name" class="text-sm font-medium">Név</label>
+        <label for="name" class="text-sm font-medium">{{
+          "CONTACT.FORM.NAME" | translate
+        }}</label>
         <input
           id="name"
           type="text"
@@ -297,12 +301,15 @@
           [(ngModel)]="name"
           class="w-full"
           required
+          [placeholder]="'CONTACT.FORM.ENTER_NAME' | translate"
         />
       </div>
 
       <!-- Email -->
       <div class="flex flex-col gap-1">
-        <label for="email" class="text-sm font-medium">Email</label>
+        <label for="email" class="text-sm font-medium">{{
+          "CONTACT.FORM.EMAIL" | translate
+        }}</label>
         <input
           id="email"
           type="email"
@@ -311,12 +318,15 @@
           [(ngModel)]="email"
           class="w-full"
           required
+          [placeholder]="'CONTACT.FORM.ENTER_EMAIL' | translate"
         />
       </div>
 
       <!-- Phone -->
       <div class="flex flex-col gap-1">
-        <label for="phone" class="text-sm font-medium">Telefonszám</label>
+        <label for="phone" class="text-sm font-medium">{{
+          "CONTACT.FORM.PHONE" | translate
+        }}</label>
         <input
           id="phone"
           type="tel"
@@ -324,12 +334,15 @@
           name="phone"
           [(ngModel)]="phone"
           class="w-full"
+          [placeholder]="'CONTACT.FORM.ENTER_PHONE' | translate"
         />
       </div>
 
       <!-- Message -->
       <div class="flex flex-col gap-1">
-        <label for="message" class="text-sm font-medium">Üzenet</label>
+        <label for="message" class="text-sm font-medium">{{
+          "CONTACT.FORM.MESSAGE" | translate
+        }}</label>
         <textarea
           id="message"
           pTextarea
@@ -338,6 +351,7 @@
           rows="5"
           class="w-full"
           required
+          [placeholder]="'CONTACT.FORM.ENTER_MESSAGE' | translate"
         ></textarea>
       </div>
 
@@ -345,12 +359,12 @@
       <button
         pButton
         type="submit"
-        label="Küldés"
+        [label]="'CONTACT.FORM.SUBMIT' | translate"
         [disabled]="form.invalid"
         class="w-full mt-6"
       ></button>
-
     </form>
+
     <p class="text-center text-muted-color text-sm mt-8">
       <strong>Mitrik László e.v. </strong>
     </p>
