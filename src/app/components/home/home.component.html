@@ -83,14 +83,9 @@
   <div class="h-[15rem]"></div>
 
   <div
-    *ngIf="scrollOpacity > 0"
-    class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 flex flex-col items-center gap-2"
-    [ngClass]="{
-      'opacity-100': scrollOpacity === 1,
-      'opacity-50': scrollOpacity < 1 && scrollOpacity > 0
-    }"
+    *ngIf="showScrollHint"
+    class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 flex flex-col items-center gap-2 transition-opacity duration-[1200ms] ease-in-out"
     [style.opacity]="scrollOpacity"
-    style="transition: opacity 1.2s ease-in-out"
   >
     <span class="text-xl font-medium drop-shadow">
       {{ "SCROLL_DOWN" | translate }}

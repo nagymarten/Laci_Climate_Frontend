@@ -66,6 +66,7 @@ export class HomeComponent implements OnInit {
 
   selectedLanguage: any;
   data: TreeNode[] = [];
+  showScrollHint = true;
 
   ngOnInit(): void {
     this.initLanguage();
@@ -85,19 +86,25 @@ export class HomeComponent implements OnInit {
 
     this.updateOrganizationChart();
   }
+
   @HostListener('window:scroll', [])
   onWindowScroll() {
     const scrollY = window.scrollY || window.pageYOffset;
 
     if (scrollY < 50) {
       this.scrollOpacity = 1;
+      this.showScrollHint = true;
     } else if (scrollY >= 50 && scrollY < 150) {
       this.scrollOpacity = 1 - (scrollY - 50) / 100;
     } else {
       this.scrollOpacity = 0;
-    }
 
-    this.isVisible = this.scrollOpacity > 0;
+      setTimeout(() => {
+        if (this.scrollOpacity === 0) {
+          this.showScrollHint = false;
+        }
+      }, 1200);
+    }
   }
 
   private initLanguage(): void {
@@ -207,10 +214,7 @@ export class HomeComponent implements OnInit {
             this.messageService.add({
               severity: 'success',
               summary: lang === 'hu' ? 'Sikeres küldés' : 'Message Sent',
-              detail:
-                lang === 'hu'
-                  ? 'Üzenet elküldve!'
-                  : 'Message sent!.',
+              detail: lang === 'hu' ? 'Üzenet elküldve!' : 'Message sent!',
               life: 4000,
             });
           })
