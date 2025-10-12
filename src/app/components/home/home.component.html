@@ -3,7 +3,6 @@
 <div class="scrollable flex justify-end items-center gap-4 p-4 border-bottom">
   <p-button
     [icon]="isDark() ? 'pi pi-sun' : 'pi pi-moon'"
-    class="p-button-outlined p-button-sm"
     (onClick)="toggleDark()"
   ></p-button>
 
@@ -61,7 +60,7 @@
     pAnimateOnScroll
     enterClass="animate-enter fade-in-10 zoom-in-50 animate-duration-1000"
     leaveClass="animate-leave fade-out zoom-in-50 animate-duration-1000"
-    class="text-3xl font-bold text-center mb-12"
+    class="mb-4"
     icon="pi pi-envelope "
     label="E-mail"
     (click)="scrollToForm()"
@@ -71,8 +70,8 @@
     pAnimateOnScroll
     enterClass="animate-enter fade-in-10 zoom-in-50 animate-duration-1000"
     leaveClass="animate-leave fade-out zoom-in-50 animate-duration-1000"
-    class="text-3xl font-bold text-center mb-12"
     icon="pi pi-phone"
+    class="mb-4"
     label="+36 20 226 09 59"
     (click)="callPhone()"
   ></p-button>
@@ -320,7 +319,6 @@
       #form="ngForm"
       class="w-full space-y-4 sm:space-y-5"
     >
-      <!-- Name -->
       <div class="flex flex-col gap-1">
         <label for="name" class="text-sm font-medium">{{
           "CONTACT.FORM.NAME" | translate
@@ -337,7 +335,6 @@
         />
       </div>
 
-      <!-- Email -->
       <div class="flex flex-col gap-1">
         <label for="email" class="text-sm font-medium">{{
           "CONTACT.FORM.EMAIL" | translate

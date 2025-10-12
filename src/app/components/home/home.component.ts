@@ -6,25 +6,26 @@ import {
   OnInit,
   signal,
   ViewChild,
-} from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { ButtonModule } from 'primeng/button';
-import { SelectModule } from 'primeng/select';
-import { FormsModule } from '@angular/forms';
-import { AnimateOnScrollModule } from 'primeng/animateonscroll';
-import { AvatarModule } from 'primeng/avatar';
-import { ScrollTopModule } from 'primeng/scrolltop';
-import { OrganizationChartModule } from 'primeng/organizationchart';
-import { MessageService, TreeNode } from 'primeng/api';
-import { MatIconModule } from '@angular/material/icon';
-import { InputTextModule } from 'primeng/inputtext';
-import { TextareaModule } from 'primeng/textarea';
-import emailjs from '@emailjs/browser';
-import { Toast } from 'primeng/toast';
+} from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { TranslateService, TranslateModule } from "@ngx-translate/core";
+import { ButtonModule } from "primeng/button";
+import { SelectModule } from "primeng/select";
+import { FormsModule } from "@angular/forms";
+import { AnimateOnScrollModule } from "primeng/animateonscroll";
+import { AvatarModule } from "primeng/avatar";
+import { ScrollTopModule } from "primeng/scrolltop";
+import { OrganizationChartModule } from "primeng/organizationchart";
+import { MessageService, TreeNode } from "primeng/api";
+import { MatIconModule } from "@angular/material/icon";
+import { InputTextModule } from "primeng/inputtext";
+import { TextareaModule } from "primeng/textarea";
+import emailjs from "@emailjs/browser";
+import { Toast } from "primeng/toast";
+import { Router, ActivatedRoute } from "@angular/router";
 
 @Component({
-  selector: 'app-home',
+  selector: "app-home",
   imports: [
     ButtonModule,
     CommonModule,
@@ -42,26 +43,29 @@ import { Toast } from 'primeng/toast';
     Toast,
   ],
   providers: [MessageService],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css',
+  templateUrl: "./home.component.html",
+  styleUrl: "./home.component.css",
 })
 export class HomeComponent implements OnInit {
   private translate = inject(TranslateService);
   private messageService = inject(MessageService);
 
-  @ViewChild('contactFormRef') contactForm!: ElementRef;
+  @ViewChild("contactFormRef") contactForm!: ElementRef;
+
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
 
   isDark = signal(false);
   scrollOpacity = 1;
   isVisible = true;
 
-  name = '';
-  message = '';
-  email = '';
-  phone = '';
+  name = "";
+  message = "";
+  email = "";
+  phone = "";
   languages = [
-    { name: 'English', code: 'en' },
-    { name: 'Magyar', code: 'hu' },
+    { name: "English", code: "en" },
+    { name: "Magyar", code: "hu" },
   ];
 
   selectedLanguage: any;
@@ -71,23 +75,23 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.initLanguage();
 
-    const container = document.querySelector('.scrollable');
+    const container = document.querySelector(".scrollable");
     if (container) {
       container.scrollTop = 0;
     }
 
-    if (typeof window !== 'undefined') {
-      const darkMode = localStorage.getItem('isDarkMode');
-      if (darkMode === 'true') {
+    if (typeof window !== "undefined") {
+      const darkMode = localStorage.getItem("isDarkMode");
+      if (darkMode === "true") {
         this.isDark.set(true);
-        document.querySelector('html')?.classList.add('my-app-dark');
+        document.querySelector("html")?.classList.add("my-app-dark");
       }
     }
 
     this.updateOrganizationChart();
   }
 
-  @HostListener('window:scroll', [])
+  @HostListener("window:scroll", [])
   onWindowScroll() {
     const scrollY = window.scrollY || window.pageYOffset;
 
@@ -108,7 +112,7 @@ export class HomeComponent implements OnInit {
   }
 
   private initLanguage(): void {
-    const savedLang = localStorage.getItem('language') || 'hu';
+    const savedLang = localStorage.getItem("language") || "hu";
     this.selectedLanguage = this.languages.find(
       (lang) => lang.code === savedLang
     );
@@ -119,27 +123,27 @@ export class HomeComponent implements OnInit {
   private updateOrganizationChart(): void {
     this.translate
       .get([
-        'ORGANIZATION.TITLE',
-        'ORGANIZATION.SPLIT',
-        'ORGANIZATION.PARAPET',
-        'ORGANIZATION.CASSETTE',
+        "ORGANIZATION.TITLE",
+        "ORGANIZATION.SPLIT",
+        "ORGANIZATION.PARAPET",
+        "ORGANIZATION.CASSETTE",
       ])
       .subscribe((translations) => {
         this.data = [
           {
-            label: translations['ORGANIZATION.TITLE'],
+            label: translations["ORGANIZATION.TITLE"],
             expanded: true,
             children: [
               {
-                label: translations['ORGANIZATION.SPLIT'],
+                label: translations["ORGANIZATION.SPLIT"],
                 expanded: true,
               },
               {
-                label: translations['ORGANIZATION.PARAPET'],
+                label: translations["ORGANIZATION.PARAPET"],
                 expanded: true,
               },
               {
-                label: translations['ORGANIZATION.CASSETTE'],
+                label: translations["ORGANIZATION.CASSETTE"],
                 expanded: true,
               },
             ],
@@ -151,38 +155,50 @@ export class HomeComponent implements OnInit {
   toggleDark() {
     const newValue = !this.isDark();
     this.isDark.set(newValue);
-    localStorage.setItem('isDarkMode', String(newValue));
+    localStorage.setItem("isDarkMode", String(newValue));
 
-    const element = document.querySelector('html');
+    const element = document.querySelector("html");
     if (element) {
-      element.classList.toggle('my-app-dark', newValue);
+      element.classList.toggle("my-app-dark", newValue);
     }
   }
 
   onLanguageChange(event: any, selectRef: any) {
-    const langCode = event.value.code;
-    this.translate.use(langCode);
-    localStorage.setItem('language', langCode);
+    const lang = (event?.value?.code ?? event?.value ?? "hu") as "hu" | "en";
+
+    this.translate.use(lang);
+    localStorage.setItem("language", lang);
+
+    const currentUrl = this.router.url.split("#")[0].split("?")[0];
+    const segments = currentUrl.split("/").filter(Boolean);
+
+    const rest = ["hu", "en"].includes(segments[0])
+      ? segments.slice(1)
+      : segments;
+
+    this.router.navigate(["/", lang, ...rest], {
+      queryParamsHandling: "preserve",
+      fragment: this.route.snapshot.fragment ?? undefined,
+    });
 
     if (selectRef?.el?.nativeElement) {
       selectRef.el.nativeElement.blur();
-
-      selectRef.el.nativeElement.classList.remove('p-focus');
+      selectRef.el.nativeElement.classList.remove("p-focus");
     }
   }
 
   sendMessage() {
     const localizedTitles = {
-      en: 'Your request has been received',
-      hu: 'Megkaptuk az üzenetét',
+      en: "Your request has been received",
+      hu: "Megkaptuk az üzenetét",
     };
 
     const localizedReplies = {
-      hu: `Kedves ${this.name}!\n\nKöszönjük, hogy felvette velünk a kapcsolatot! Megkaptuk az alábbi kérését: „${localizedTitles['hu']}”. Igyekszünk azt 3 munkanapon belül feldolgozni.\n\nÜdvözlettel:\nMitrik László`,
-      en: `Hi ${this.name},\n\nThank you for reaching out! We have received your request: "${localizedTitles['en']}" and will process it within 3 business days.\n\nBest regards,\nMitrik László`,
+      hu: `Kedves ${this.name}!\n\nKöszönjük, hogy felvette velünk a kapcsolatot! Megkaptuk az alábbi kérését: „${localizedTitles["hu"]}”. Igyekszünk azt 3 munkanapon belül feldolgozni.\n\nÜdvözlettel:\nMitrik László`,
+      en: `Hi ${this.name},\n\nThank you for reaching out! We have received your request: "${localizedTitles["en"]}" and will process it within 3 business days.\n\nBest regards,\nMitrik László`,
     };
 
-    const lang = this.selectedLanguage.code as 'hu' | 'en';
+    const lang = this.selectedLanguage.code as "hu" | "en";
 
     const templateParams = {
       name: this.name,
@@ -196,54 +212,54 @@ export class HomeComponent implements OnInit {
     // 1. Send to admin
     emailjs
       .send(
-        'service_iv5svdv',
-        'template_lgz5yv7',
+        "service_iv5svdv",
+        "template_lgz5yv7",
         templateParams,
-        'UiZnfR01s1uECBEHS'
+        "UiZnfR01s1uECBEHS"
       )
       .then(() => {
         // 2. Auto-reply to user
         emailjs
           .send(
-            'service_iv5svdv',
-            'template_msr2hhd',
+            "service_iv5svdv",
+            "template_msr2hhd",
             templateParams,
-            'UiZnfR01s1uECBEHS'
+            "UiZnfR01s1uECBEHS"
           )
           .then(() => {
             this.messageService.add({
-              severity: 'success',
-              summary: lang === 'hu' ? 'Sikeres küldés' : 'Message Sent',
-              detail: lang === 'hu' ? 'Üzenet elküldve!' : 'Message sent!',
+              severity: "success",
+              summary: lang === "hu" ? "Sikeres küldés" : "Message Sent",
+              detail: lang === "hu" ? "Üzenet elküldve!" : "Message sent!",
               life: 4000,
             });
           })
           .catch((err) => {
-            console.warn('Auto-reply failed:', err);
+            console.warn("Auto-reply failed:", err);
           });
       })
       .catch((error) => {
         this.messageService.add({
-          severity: 'error',
-          summary: lang === 'hu' ? 'Hiba' : 'Error',
+          severity: "error",
+          summary: lang === "hu" ? "Hiba" : "Error",
           detail:
-            (lang === 'hu'
-              ? 'Hiba történt az üzenet küldésekor: '
-              : 'Failed to send email: ') + JSON.stringify(error),
+            (lang === "hu"
+              ? "Hiba történt az üzenet küldésekor: "
+              : "Failed to send email: ") + JSON.stringify(error),
           life: 5000,
         });
       });
   }
 
   callPhone() {
-    window.location.href = 'tel:+36201234567';
+    window.location.href = "tel:+36201234567";
   }
 
   getFlagUrl(code: string): string {
-    if (code === 'en') return 'https://flagcdn.com/gb.svg'; // UK flag for English
-    if (code === 'hu') return 'https://flagcdn.com/hu.svg'; // Hungary
-    if (code === 'de') return 'https://flagcdn.com/de.svg'; // Germany
-    return 'https://flagcdn.com/unknown.svg'; // fallback
+    if (code === "en") return "https://flagcdn.com/gb.svg"; // UK flag for English
+    if (code === "hu") return "https://flagcdn.com/hu.svg"; // Hungary
+    if (code === "de") return "https://flagcdn.com/de.svg"; // Germany
+    return "https://flagcdn.com/unknown.svg"; // fallback
   }
 
   scrollToForm() {
@@ -256,7 +272,7 @@ export class HomeComponent implements OnInit {
 
     window.scrollTo({
       top,
-      behavior: 'smooth',
+      behavior: "smooth",
     });
   }
 }
