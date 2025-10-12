@@ -24,13 +24,9 @@ export const langGuard: CanActivateFn = (route) => {
 
 export const routes: Routes = [
   { path: "", pathMatch: "full", redirectTo: "hu" },
-  {
-    path: ":lang",
-    runGuardsAndResolvers: "always",
-    children: [
-      { path: "", component: HomeComponent }, // NINCS redirect itt!
-      // ... esetleges aloldalak
-    ],
-  },
+
+  { path: "hu", children: [{ path: "", component: HomeComponent }] },
+  { path: "en", children: [{ path: "", component: HomeComponent }] },
+
   { path: "**", redirectTo: "hu" },
 ];

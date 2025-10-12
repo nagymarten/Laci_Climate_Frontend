@@ -4,6 +4,7 @@ import {
   HostListener,
   inject,
   OnInit,
+  PLATFORM_ID,
   signal,
   ViewChild,
 } from "@angular/core";
@@ -23,6 +24,7 @@ import { TextareaModule } from "primeng/textarea";
 import emailjs from "@emailjs/browser";
 import { Toast } from "primeng/toast";
 import { Router, ActivatedRoute } from "@angular/router";
+import { isPlatformBrowser, DOCUMENT } from "@angular/common";
 
 @Component({
   selector: "app-home",
@@ -54,6 +56,8 @@ export class HomeComponent implements OnInit {
 
   private router = inject(Router);
   private route = inject(ActivatedRoute);
+  private platformId = inject(PLATFORM_ID);
+  private doc = inject(DOCUMENT);
 
   isDark = signal(false);
   scrollOpacity = 1;
@@ -73,51 +77,55 @@ export class HomeComponent implements OnInit {
   showScrollHint = true;
 
   ngOnInit(): void {
-    this.initLanguage();
+    this.initLanguageSSRFirst();
+    this.updateOrganizationChart();
 
-    const container = document.querySelector(".scrollable");
-    if (container) {
-      container.scrollTop = 0;
-    }
+    if (isPlatformBrowser(this.platformId)) {
+      const container = document.querySelector(".scrollable");
+      if (container) (container as HTMLElement).scrollTop = 0;
 
-    if (typeof window !== "undefined") {
       const darkMode = localStorage.getItem("isDarkMode");
       if (darkMode === "true") {
         this.isDark.set(true);
-        document.querySelector("html")?.classList.add("my-app-dark");
+        this.doc?.documentElement?.classList.add("my-app-dark");
       }
-    }
 
-    this.updateOrganizationChart();
+      this.translate.onLangChange.subscribe(() =>
+        this.updateOrganizationChart()
+      );
+    }
   }
 
   @HostListener("window:scroll", [])
   onWindowScroll() {
+    if (!isPlatformBrowser(this.platformId)) return;
     const scrollY = window.scrollY || window.pageYOffset;
-
     if (scrollY < 50) {
       this.scrollOpacity = 1;
       this.showScrollHint = true;
-    } else if (scrollY >= 50 && scrollY < 150) {
+    } else if (scrollY < 150) {
       this.scrollOpacity = 1 - (scrollY - 50) / 100;
     } else {
       this.scrollOpacity = 0;
-
       setTimeout(() => {
-        if (this.scrollOpacity === 0) {
-          this.showScrollHint = false;
-        }
+        if (this.scrollOpacity === 0) this.showScrollHint = false;
       }, 1200);
     }
   }
 
-  private initLanguage(): void {
-    const savedLang = localStorage.getItem("language") || "hu";
-    this.selectedLanguage = this.languages.find(
-      (lang) => lang.code === savedLang
-    );
-    this.translate.setDefaultLang(savedLang);
-    this.translate.use(savedLang);
+  private initLanguageSSRFirst(): void {
+    const path = this.router.url.split("?")[0].split("#")[0];
+    const seg = path.split("/").filter(Boolean)[0];
+    const urlLang: "hu" | "en" = seg === "en" ? "en" : "hu";
+
+    this.translate.setDefaultLang(urlLang);
+    this.translate.use(urlLang);
+    this.selectedLanguage = this.languages.find((l) => l.code === urlLang);
+
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem("language", urlLang);
+      this.doc.documentElement.lang = urlLang;
+    }
   }
 
   private updateOrganizationChart(): void {
@@ -128,24 +136,15 @@ export class HomeComponent implements OnInit {
         "ORGANIZATION.PARAPET",
         "ORGANIZATION.CASSETTE",
       ])
-      .subscribe((translations) => {
+      .subscribe((tr) => {
         this.data = [
           {
-            label: translations["ORGANIZATION.TITLE"],
+            label: tr["ORGANIZATION.TITLE"],
             expanded: true,
             children: [
-              {
-                label: translations["ORGANIZATION.SPLIT"],
-                expanded: true,
-              },
-              {
-                label: translations["ORGANIZATION.PARAPET"],
-                expanded: true,
-              },
-              {
-                label: translations["ORGANIZATION.CASSETTE"],
-                expanded: true,
-              },
+              { label: tr["ORGANIZATION.SPLIT"], expanded: true },
+              { label: tr["ORGANIZATION.PARAPET"], expanded: true },
+              { label: tr["ORGANIZATION.CASSETTE"], expanded: true },
             ],
           },
         ];
@@ -155,11 +154,9 @@ export class HomeComponent implements OnInit {
   toggleDark() {
     const newValue = !this.isDark();
     this.isDark.set(newValue);
-    localStorage.setItem("isDarkMode", String(newValue));
-
-    const element = document.querySelector("html");
-    if (element) {
-      element.classList.toggle("my-app-dark", newValue);
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem("isDarkMode", String(newValue));
+      this.doc?.documentElement?.classList.toggle("my-app-dark", newValue);
     }
   }
 
@@ -169,12 +166,12 @@ export class HomeComponent implements OnInit {
     this.translate.use(lang);
     localStorage.setItem("language", lang);
 
-    const currentUrl = this.router.url.split("#")[0].split("?")[0];
-    const segments = currentUrl.split("/").filter(Boolean);
+    const url = this.router.url.split("#")[0].split("?")[0];
+    const segs = url.split("/").filter(Boolean);
+    const hasLocale = segs[0] === "hu" || segs[0] === "en";
+    const rest = hasLocale ? segs.slice(1) : segs;
 
-    const rest = ["hu", "en"].includes(segments[0])
-      ? segments.slice(1)
-      : segments;
+    if (hasLocale && segs[0] === lang) return;
 
     this.router.navigate(["/", lang, ...rest], {
       queryParamsHandling: "preserve",
@@ -209,7 +206,6 @@ export class HomeComponent implements OnInit {
       auto_reply_message: localizedReplies[lang],
     };
 
-    // 1. Send to admin
     emailjs
       .send(
         "service_iv5svdv",
@@ -218,7 +214,6 @@ export class HomeComponent implements OnInit {
         "UiZnfR01s1uECBEHS"
       )
       .then(() => {
-        // 2. Auto-reply to user
         emailjs
           .send(
             "service_iv5svdv",
@@ -256,10 +251,10 @@ export class HomeComponent implements OnInit {
   }
 
   getFlagUrl(code: string): string {
-    if (code === "en") return "https://flagcdn.com/gb.svg"; // UK flag for English
-    if (code === "hu") return "https://flagcdn.com/hu.svg"; // Hungary
-    if (code === "de") return "https://flagcdn.com/de.svg"; // Germany
-    return "https://flagcdn.com/unknown.svg"; // fallback
+    if (code === "en") return "https://flagcdn.com/gb.svg";
+    if (code === "hu") return "https://flagcdn.com/hu.svg";
+    if (code === "de") return "https://flagcdn.com/de.svg";
+    return "https://flagcdn.com/unknown.svg";
   }
 
   scrollToForm() {

@@ -13,7 +13,7 @@ import {
   provideClientHydration,
   withEventReplay,
 } from "@angular/platform-browser";
-import { provideHttpClient } from "@angular/common/http";
+import { provideHttpClient, withFetch } from "@angular/common/http";
 
 import { HttpClient } from "@angular/common/http";
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
@@ -38,6 +38,7 @@ export const appConfig: ApplicationConfig = {
     }),
     provideAnimationsAsync(),
     provideHttpClient(),
+    provideHttpClient(withFetch()),
     importProvidersFrom(
       TranslateModule.forRoot({
         defaultLanguage: "hu",
@@ -47,6 +48,6 @@ export const appConfig: ApplicationConfig = {
           deps: [HttpClient],
         },
       })
-    ), provideClientHydration(withEventReplay()),
+    ),
   ],
 };
