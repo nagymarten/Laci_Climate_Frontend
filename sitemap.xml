@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://mitrikhutes.hu/hu</loc>
+    <loc>https://mitrikhutes.hu/#/hu</loc>
     <xhtml:link rel="alternate" hreflang="hu" href="https://mitrikhutes.hu/#/hu"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://mitrikhutes.hu/#/en"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://mitrikhutes.hu/#/hu"/>
@@ -11,7 +11,7 @@
   </url>
 
   <url>
-    <loc>https://mitrikhutes.hu/hu/services</loc>
+    <loc>https://mitrikhutes.hu/#/hu/notfound</loc>
     <xhtml:link rel="alternate" hreflang="hu" href="https://mitrikhutes.hu/#/hu/notfound"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://mitrikhutes.hu/#/en/notfound"/>
     <changefreq>monthly</changefreq>
