@@ -31,9 +31,7 @@
               "src/favicon.png",
               "src/assets"
             ],
-            "styles": [
-              "src/styles.css"
-            ],
+            "styles": ["src/styles.css"],
             "scripts": [],
             "server": "src/main.server.ts",
             "outputMode": "server",
@@ -108,13 +106,13 @@
           "options": {
             "browserTarget": "Laci_Climate_Frontend:build:development",
             "serverTarget": "Laci_Climate_Frontend:server:development",
-            "routes": ["/hu", "/en"]
+            "routes": ["/", "/hu", "/en"]
           },
           "configurations": {
             "production": {
               "browserTarget": "Laci_Climate_Frontend:build:production",
               "serverTarget": "Laci_Climate_Frontend:server:production",
-              "routes": ["/hu", "/en"]
+              "routes": ["/", "/hu", "/en"]
             }
           }
         },
