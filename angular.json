@@ -29,7 +29,13 @@
                 "output": "/assets/i18n"
               },
               "src/favicon.png",
-              "src/assets"
+              "src/assets",
+              { "glob": "sitemap.xml", "input": "src", "output": "/" },
+              {
+                "glob": "robots.txt",
+                "input": "src",
+                "output": "/"
+              }
             ],
             "styles": ["src/styles.css"],
             "scripts": [],

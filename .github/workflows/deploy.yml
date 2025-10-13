@@ -25,6 +25,8 @@ jobs:
         run: |
           npm run build -- --output-mode=static --base-href "/"
 
+          cp dist/laci-climate-frontend/browser/index.html dist/laci-climate-frontend/browser/404.html 
+
           echo "mitrikhutes.hu" > dist/laci-climate-frontend/browser/CNAME
 
       - name: Deploy to GitHub Pages
