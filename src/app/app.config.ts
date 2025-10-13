@@ -3,7 +3,11 @@ import {
   importProvidersFrom,
   provideZoneChangeDetection,
 } from "@angular/core";
-import { provideRouter, withRouterConfig } from "@angular/router";
+import {
+  provideRouter,
+  withHashLocation,
+  withRouterConfig,
+} from "@angular/router";
 import { provideAnimationsAsync } from "@angular/platform-browser/animations/async";
 import { providePrimeNG } from "primeng/config";
 import Aura from "@primeng/themes/aura";
@@ -26,7 +30,11 @@ export function httpLoaderFactory(http: HttpClient) {
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes, withRouterConfig({ onSameUrlNavigation: "reload" })),
+    provideRouter(
+      routes,
+      withHashLocation(),
+      withRouterConfig({ onSameUrlNavigation: "reload" })
+    ),
     provideClientHydration(withEventReplay()),
     providePrimeNG({
       theme: {

@@ -33,11 +33,7 @@
             ],
             "styles": ["src/styles.css"],
             "scripts": [],
-            "server": "src/main.server.ts",
-            "outputMode": "server",
-            "ssr": {
-              "entry": "src/server.ts"
-            }
+            "outputMode": "static"
           },
           "configurations": {
             "production": {
@@ -106,13 +102,27 @@
           "options": {
             "browserTarget": "Laci_Climate_Frontend:build:development",
             "serverTarget": "Laci_Climate_Frontend:server:development",
-            "routes": ["/", "/hu", "/en"]
+            "routes": [
+              "/",
+              "/hu",
+              "/en",
+              "/notfound",
+              "/en/notfound",
+              "/hu/notfound"
+            ]
           },
           "configurations": {
             "production": {
               "browserTarget": "Laci_Climate_Frontend:build:production",
               "serverTarget": "Laci_Climate_Frontend:server:production",
-              "routes": ["/", "/hu", "/en"]
+              "routes": [
+                "/",
+                "/hu",
+                "/en",
+                "/notfound",
+                "/en/notfound",
+                "/hu/notfound"
+              ]
             }
           }
         },

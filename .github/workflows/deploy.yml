@@ -23,7 +23,8 @@ jobs:
 
       - name: Build Angular app
         run: |
-          npm run build -- --base-href "/"
+          npm run build -- --output-mode=static --base-href "/"
+
           echo "mitrikhutes.hu" > dist/laci-climate-frontend/browser/CNAME
 
       - name: Deploy to GitHub Pages

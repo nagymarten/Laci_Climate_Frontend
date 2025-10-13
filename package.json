@@ -6,7 +6,6 @@
     "start": "ng serve",
     "build": "ng build",
     "build:ssr": "ng build",
-    "serve:ssr": "node dist/laci-climate-frontend/server/server.mjs",
     "prerender": "ng run Laci_Climate_Frontend:prerender",
     "prerender:prod": "ng run Laci_Climate_Frontend:prerender:production",
     "watch": "ng build --watch --configuration development",
