@@ -97,5 +97,8 @@
       "TITLE": "Kényelem",
       "DESCRIPTION": "Automatizált rendszerek, okosvezérlés"
     }
+  },
+  "FOOTER": {
+    "ALL_RIGHTS": "Minden jog fenntartva"
   }
 }

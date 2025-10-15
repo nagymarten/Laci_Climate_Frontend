@@ -97,5 +97,8 @@
       "TITLE": "Comfort",
       "DESCRIPTION": "Automated systems, smart control"
     }
+  },
+  "FOOTER": {
+    "ALL_RIGHTS": "All rights reserved"
   }
 }

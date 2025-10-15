@@ -25,6 +25,11 @@ import emailjs from "@emailjs/browser";
 import { Toast } from "primeng/toast";
 import { Router, ActivatedRoute } from "@angular/router";
 import { isPlatformBrowser, DOCUMENT } from "@angular/common";
+import { ImageModule } from 'primeng/image';
+import { ImageCompareModule } from "primeng/imagecompare";
+import { CardModule } from "primeng/card";
+import { FooterComponent } from "../footer/footer.component";
+
 
 @Component({
   selector: "app-home",
@@ -43,6 +48,10 @@ import { isPlatformBrowser, DOCUMENT } from "@angular/common";
     InputTextModule,
     TextareaModule,
     Toast,
+    ImageModule,
+    ImageCompareModule,
+    CardModule,
+    FooterComponent,
   ],
   providers: [MessageService],
   templateUrl: "./home.component.html",
